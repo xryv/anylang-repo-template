@@ -1,12 +1,45 @@
 cff-version: 1.2.0
-title: anylang-repo-template
-message: "If you use this template, please cite it as below."
+message: "If you use this template, please cite it as shown below."
 type: software
+title: anylang-repo-template
+abstract: >
+  A language-agnostic GitHub repository template with auto-detect CI (Node, Python, Go,
+  Rust, Java, .NET, Docker), CodeQL scanning, Dependabot updates, structured governance,
+  and ready-to-ship workflows. Clone once, ship anywhere.
 authors:
-  - family-names: "<YOUR_LASTNAME>"
-    given-names: "<YOUR_FIRSTNAME>"
-    email: "<YOUR_EMAIL>"
+  - family-names: Cerqueira
+    given-names: Bruno
+    email: bruno.cerqueira@zevimetal.pt
+    alias: xryv
+    affiliation: Aethereal.Nexus
 license: MIT
-repository-code: "https://github.com/<YOUR_GITHUB>/anylang-repo-template"
+repository-code: "https://github.com/xryv/anylang-repo-template"
+url: "https://github.com/xryv/anylang-repo-template"
+keywords:
+  - repository template
+  - boilerplate
+  - ci
+  - github actions
+  - codeql
+  - dependabot
+  - multi-language
+  - node
+  - python
+  - go
+  - rust
+  - java
+  - dotnet
+  - docker
 version: "0.1.0"
 date-released: "2025-09-30"
+preferred-citation:
+  type: software
+  title: anylang-repo-template
+  authors:
+    - family-names: Cerqueira
+      given-names: Bruno
+      alias: xryv
+  repository-code: "https://github.com/xryv/anylang-repo-template"
+  url: "https://github.com/xryv/anylang-repo-template"
+  version: "0.1.0"
+  date-released: "2025-09-30"

@@ -1,25 +1,54 @@
+# .github/workflows/codeql.yml
+# 🧠 CODEQL — AUTO-PILOT FOR THREATS
+# This workflow launches CodeQL analysis *only* if the repo contains detectable source code
+# in Node.js, Python, or Go. It runs weekly and on every push/PR to `main`.
+
 name: codeql
+
 on:
   push:
+    branches: [ main ]
   pull_request:
   schedule:
-    - cron: '0 3 * * 1' # weekly
+    - cron: '0 4 * * 1' # Every Monday at 04:00 UTC
+  workflow_dispatch:
 
 jobs:
   analyze:
-    if: ${{ hashFiles('**/package.json') != '' || hashFiles('**/pyproject.toml') != '' || hashFiles('**/requirements.txt') != '' || hashFiles('**/go.mod') != '' }}
+    name: 🧠 CodeQL
     runs-on: ubuntu-latest
+
+    if: >
+      ${{
+        hashFiles('**/package.json')     != '' ||
+        hashFiles('**/pyproject.toml')   != '' ||
+        hashFiles('**/requirements.txt') != '' ||
+        hashFiles('**/go.mod')           != ''
+      }}
+
     permissions:
       security-events: write
       actions: read
       contents: read
+
     strategy:
       fail-fast: false
       matrix:
         language: [ 'javascript-typescript', 'python', 'go' ]
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: github/codeql-action/init@v3
+      - name: 🧾 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🧪 CodeQL Init
+        uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
-      - uses: github/codeql-action/analyze@v3
+
+      - name: 📊 CodeQL Analyze
+        uses: github/codeql-action/analyze@v3
+
+      - name: 🔍 Debug Language Detection
+        run: |
+          echo "Language scanned: ${{ matrix.language }}"
+          echo "Trigger: ${{ github.event_name }}"

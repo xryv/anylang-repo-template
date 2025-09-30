@@ -1,26 +1,206 @@
+# .github/dependabot.yml
+# 🤖 DEPENDENCY SENTINEL
+# Keeps your template fresh across ecosystems. Safe, grouped, and human-friendly PRs.
+
 version: 2
+
 updates:
+  # ── JavaScript / TypeScript (npm) ────────────────────────────────────────────
   - package-ecosystem: npm
     directory: "/"
-    schedule: { interval: weekly }
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:00"
+      timezone: Europe/Lisbon
+    target-branch: main
+    open-pull-requests-limit: 10
+    rebase-strategy: auto
+    commit-message:
+      prefix: "chore(deps)"
+      include: scope
+    labels: ["dependencies", "npm"]
+    assignees: ["xryv"]
+    reviewers: ["xryv"]
+    groups:
+      minor-and-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # ── Python (pip) ────────────────────────────────────────────────────────────
   - package-ecosystem: pip
     directory: "/"
-    schedule: { interval: weekly }
-  - package-ecosystem: github-actions
-    directory: "/"
-    schedule: { interval: weekly }
-  - package-ecosystem: docker
-    directory: "/"
-    schedule: { interval: weekly }
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:10"
+      timezone: Europe/Lisbon
+    target-branch: main
+    open-pull-requests-limit: 10
+    rebase-strategy: auto
+    commit-message:
+      prefix: "chore(deps)"
+      include: scope
+    labels: ["dependencies", "python"]
+    assignees: ["xryv"]
+    reviewers: ["xryv"]
+    # If you use requirements.txt, pip-tools, or pyproject w/ PEP 621 (build backends),
+    # Dependabot will pick up constraints it understands in this directory.
+    groups:
+      minor-and-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # ── Go (modules) ────────────────────────────────────────────────────────────
   - package-ecosystem: gomod
     directory: "/"
-    schedule: { interval: weekly }
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:20"
+      timezone: Europe/Lisbon
+    target-branch: main
+    open-pull-requests-limit: 10
+    rebase-strategy: auto
+    commit-message:
+      prefix: "chore(deps)"
+      include: scope
+    labels: ["dependencies", "go"]
+    assignees: ["xryv"]
+    reviewers: ["xryv"]
+    groups:
+      minor-and-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # ── Rust (cargo) ────────────────────────────────────────────────────────────
   - package-ecosystem: cargo
     directory: "/"
-    schedule: { interval: weekly }
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:30"
+      timezone: Europe/Lisbon
+    target-branch: main
+    open-pull-requests-limit: 10
+    rebase-strategy: auto
+    commit-message:
+      prefix: "chore(deps)"
+      include: scope
+    labels: ["dependencies", "rust"]
+    assignees: ["xryv"]
+    reviewers: ["xryv"]
+    groups:
+      minor-and-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # ── Java (Maven) ────────────────────────────────────────────────────────────
   - package-ecosystem: maven
     directory: "/"
-    schedule: { interval: weekly }
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:40"
+      timezone: Europe/Lisbon
+    target-branch: main
+    open-pull-requests-limit: 10
+    rebase-strategy: auto
+    commit-message:
+      prefix: "chore(deps)"
+      include: scope
+    labels: ["dependencies", "java", "maven"]
+    assignees: ["xryv"]
+    reviewers: ["xryv"]
+    groups:
+      minor-and-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # ── Java (Gradle) ───────────────────────────────────────────────────────────
   - package-ecosystem: gradle
     directory: "/"
-    schedule: { interval: weekly }
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:45"
+      timezone: Europe/Lisbon
+    target-branch: main
+    open-pull-requests-limit: 10
+    rebase-strategy: auto
+    commit-message:
+      prefix: "chore(deps)"
+      include: scope
+    labels: ["dependencies", "java", "gradle"]
+    assignees: ["xryv"]
+    reviewers: ["xryv"]
+    groups:
+      minor-and-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # ── .NET (NuGet) ────────────────────────────────────────────────────────────
+  - package-ecosystem: nuget
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:50"
+      timezone: Europe/Lisbon
+    target-branch: main
+    open-pull-requests-limit: 10
+    rebase-strategy: auto
+    commit-message:
+      prefix: "chore(deps)"
+      include: scope
+    labels: ["dependencies", "dotnet", "nuget"]
+    assignees: ["xryv"]
+    reviewers: ["xryv"]
+    groups:
+      minor-and-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # ── Dockerfiles ─────────────────────────────────────────────────────────────
+  - package-ecosystem: docker
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "05:00"
+      timezone: Europe/Lisbon
+    target-branch: main
+    open-pull-requests-limit: 10
+    rebase-strategy: auto
+    commit-message:
+      prefix: "chore(deps)"
+      include: scope
+    labels: ["dependencies", "docker"]
+    assignees: ["xryv"]
+    reviewers: ["xryv"]
+    groups:
+      minor-and-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # ── GitHub Actions ──────────────────────────────────────────────────────────
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "05:10"
+      timezone: Europe/Lisbon
+    target-branch: main
+    open-pull-requests-limit: 10
+    rebase-strategy: auto
+    commit-message:
+      prefix: "chore(actions)"
+      include: scope
+    labels: ["dependencies", "ci", "github-actions"]
+    assignees: ["xryv"]
+    reviewers: ["xryv"]
+    groups:
+      minor-and-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]

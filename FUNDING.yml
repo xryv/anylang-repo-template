@@ -1,5 +1,13 @@
-github: [<YOUR_GITHUB>]
+# .github/FUNDING.yml
+# Help sustain this template — optional support methods shown on the GitHub Sponsors sidebar.
+
+# GitHub Sponsors
+github: [xryv]
+
+# Other platforms (optional, activate if used)
 patreon: ""
 open_collective: ""
 ko_fi: ""
-custom: ["https://buymeacoffee.com/<YOUR_HANDLE>"]
+liberapay: ""
+tidelift: ""
+custom: ["https://buymeacoffee.com/xryv", "https://xryv.dev/support"]

@@ -1,0 +1,48 @@
+# GitHub Issue Template configuration for xryv/anylang-repo-template
+# we disable blank issues and route people to the right place.
+
+blank_issues_enabled: false
+
+contact_links:
+  # --- Security & Conduct ----------------------------------------------------
+  - name: 🔒 Security vulnerability (private advisory)
+    url: https://github.com/xryv/anylang-repo-template/security/advisories/new
+    about: Report vulnerabilities privately so we can coordinate a responsible fix.
+  - name: 🤝 Code of Conduct
+    url: https://github.com/xryv/anylang-repo-template/blob/main/CODE_OF_CONDUCT.md
+    about: Be excellent to each other. Read before engaging.
+
+  # --- Discussions (community) ----------------------------------------------
+  - name: 💬 Q&A — Ask a question
+    url: https://github.com/xryv/anylang-repo-template/discussions/new?category=q-a
+    about: Usage questions, troubleshooting, “how do I…”. Prefer Discussions over Issues for Q&A.
+  - name: 💡 Ideas — Feature proposals
+    url: https://github.com/xryv/anylang-repo-template/discussions/new?category=ideas
+    about: Pitch improvements and vote on what should land next.
+  - name: 📣 Announcements & roadmap
+    url: https://github.com/xryv/anylang-repo-template/discussions
+    about: Follow updates and milestone planning.
+
+  # --- Contribution guides ---------------------------------------------------
+  - name: 🧭 Contributing guide
+    url: https://github.com/xryv/anylang-repo-template/blob/main/CONTRIBUTING.md
+    about: Start here for workflow, commit style, and PR expectations.
+  - name: 🛡 Security policy
+    url: https://github.com/xryv/anylang-repo-template/blob/main/SECURITY.md
+    about: Supported versions and how to report security issues.
+  - name: 📚 README / documentation
+    url: https://github.com/xryv/anylang-repo-template/blob/main/README.md
+    about: Project overview, setup instructions, and CI matrix.
+
+  # --- Observability & CI ----------------------------------------------------
+  - name: 🧪 CI runs & logs
+    url: https://github.com/xryv/anylang-repo-template/actions
+    about: Check recent builds, job logs, and runner environments.
+  - name: 🗺️ Milestones
+    url: https://github.com/xryv/anylang-repo-template/milestones
+    about: See planned releases and grouped issues.
+
+  # --- Get the template ------------------------------------------------------
+  - name: 🚀 Use this template
+    url: https://github.com/xryv/anylang-repo-template/generate
+    about: Create a new repo from this template with one click.

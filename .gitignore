@@ -1,47 +1,195 @@
-# OS
+# ------------------------------------------------------------------------------------
+# UNIVERSAL .gitignore FOR MULTI-LANGUAGE REPOS
+# Safe defaults for OS junk, editors, build outputs, caches, and secrets.
+# Does NOT ignore lockfiles (package-lock.json, poetry.lock, Cargo.lock, etc.)
+# ------------------------------------------------------------------------------------
+
+### OS detritus
 .DS_Store
 Thumbs.db
+ehthumbs.db
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+desktop.ini
 
-# Node
-node_modules/
+### General temp / logs / dumps
+*.log
+*.log.*
+*.tmp
+*.temp
+*.swp
+*.swo
+*.bak
+*.old
+*.orig
+*.retry
+*.pid
+*.seed
+*.dump
+*.dmp
+*.stackdump
 npm-debug.log*
-yarn.lock
-pnpm-lock.yaml
-dist/
-coverage/
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+pip-log.txt
 
-# Python
-__pycache__/
-*.py[cod]
-.venv/
+### Secrets & environment (keep examples tracked)
 .env
 .env.*
+!.env.example
+!.env.sample
+!.env.template
 
-# Go
+### Git / merge tools
+*.merge_file_*
+*.rej
+*.orig
+
+### Editors / IDEs
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.sample.json
+.idea/
+*.iml
+.vs/
+*.sublime-*
+.history/
+.code-workspace
+
+### Node / JS / TS
+node_modules/
+bower_components/
+jspm_packages/
+dist/
+build/
+out/
+coverage/
+.nyc_output/
+.next/
+.nuxt/
+.cache/
+.parcel-cache/
+.storybook-out/
+.turbo/
+.eslintcache
+.stylelintcache
+tsbuildinfo.tsbuildinfo
+*.tsbuildinfo
+
+### Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+.python-version
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.pytype/
+.tox/
+.coverage
+.coverage.*
+htmlcov/
+dist/
+build/
+pip-wheel-metadata/
+*.egg-info/
+.eggs/
+.venv/
+venv/
+env/
+ENV/
+.ipynb_checkpoints
+
+### Go
 bin/
 vendor/
+*.test
+coverage.out
 
-# Rust
+### Rust
 target/
+# Keep Cargo.lock for reproducible builds (don’t ignore it)
 
-# Java / Gradle / Maven
+### Java / Kotlin (Maven / Gradle)
 *.class
 *.jar
 *.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+.mvn/wrapper/maven-wrapper.jar
+.target/
+target/
 .gradle/
 build/
-target/
+.gradle-cache/
 
-# .NET
+### Gradle local cache noise
+**/build/
+**/.gradle/
+gradle-app.setting
+
+### .NET / C#
 bin/
 obj/
-*.user
 *.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.vsp
+*.vspx
+*.psess
+*.ncb
+_TestResults/
+TestResults/
+*.ide/
 
-# Docker
+### PHP / Composer
+vendor/
+
+### Ruby
+.bundle/
+vendor/bundle/
+.rspec
+.ruby-version
+.rbenv-version
+.rvmrc
+coverage/
+
+### Docker
 *.tar
+**/.docker-cache/
+.dockerignore.local
 
-# General
-.idea/
-.vscode/
-*.log
+### Containers & orchestration
+.kube/
+helm-chart/**/charts/
+helm-chart/**/tmp/
+
+### CI artifacts (generic)
+artifacts/
+reports/
+junit*.xml
+test-results.xml
+lcov.info
+
+### Misc build caches
+.cache/
+.tmp/
+tmp/
+temp/
+
+### Images and binaries (if generated)
+*.iso
+*.bin
+
+# ------------------------------------------------------------------------------------
+# End of file
+# ------------------------------------------------------------------------------------

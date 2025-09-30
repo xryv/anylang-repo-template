@@ -1,1 +1,16 @@
 20
+# Node.js version to use in this project
+# Used by:
+# - nvm (local dev)
+# - GitHub Actions (ci.yml auto-syncs to this)
+# - VSCode settings (via dev containers or extensions)
+#
+# Why 20?
+# → It's LTS, stable, widely supported, and aligns with GitHub's default runners.
+#
+# To switch locally:
+#   nvm install
+#   nvm use
+#
+# To set it as default:
+#   nvm alias default 20

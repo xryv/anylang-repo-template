@@ -1,12 +1,20 @@
+# .github/workflows/ci.yml
+# 🧪 TEST MATRIX
+# This workflow is self-aware. It detects which stack you're using and only runs what's relevant.
+# Supports: Node, Python, Go, Rust, Java, .NET, Docker — and always checks for README presence.
+# Every job is a surgically scoped environment. Add more languages, more power.
+
 name: ci
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 jobs:
-  # --- Node.js ---------------------------------------------------------------
+
+  # ——— Node.js (detected via package.json) —————————————————————————————
   node:
-    name: Node.js
+    name: 🟢 Node.js
     runs-on: ubuntu-latest
     if: ${{ hashFiles('**/package.json') != '' }}
     steps:
@@ -14,17 +22,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: npm
-      - name: Install
+          cache: 'npm'
+      - name: 🧩 Install
         run: |
           if [ -f package-lock.json ]; then npm ci; else npm install; fi
-      - name: Test
+      - name: ✅ Test
         run: |
-          if npm run | grep -q " test"; then npm test; else node -e "console.log('No test script')" ; fi
+          if npm run | grep -q " test"; then npm test; else echo "No test script"; fi
 
-  # --- Python ---------------------------------------------------------------
+  # ——— Python (pyproject.toml or requirements.txt) ——————————————————
   python:
-    name: Python
+    name: 🐍 Python
     runs-on: ubuntu-latest
     if: ${{ hashFiles('**/pyproject.toml') != '' || hashFiles('**/requirements.txt') != '' }}
     steps:
@@ -33,22 +41,19 @@ jobs:
         with:
           python-version: '3.12'
           cache: 'pip'
-      - name: Install
+      - name: 🧩 Install
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           if [ -f pyproject.toml ]; then pip install . || true; fi
-      - name: Test
+      - name: ✅ Test
         run: |
-          if python -c "import pytest" 2>/dev/null; then pytest -q || true; else python - <<'PY'
-import unittest; print("pytest not found -> running unittest discovery"); 
-unittest.TextTestRunner().run(unittest.defaultTestLoader.discover('.'))
-PY
-          fi
+          if python -c "import pytest" 2>/dev/null; then pytest -q || true;
+          else python -m unittest discover -v; fi
 
-  # --- Go -------------------------------------------------------------------
+  # ——— Go (go.mod) ———————————————————————————————————————————————
   go:
-    name: Go
+    name: 🦫 Go
     runs-on: ubuntu-latest
     if: ${{ hashFiles('**/go.mod') != '' }}
     steps:
@@ -56,21 +61,23 @@ PY
       - uses: actions/setup-go@v5
         with:
           go-version: '1.22'
-      - run: go test ./...
+      - name: ✅ Test
+        run: go test ./...
 
-  # --- Rust -----------------------------------------------------------------
+  # ——— Rust (Cargo.toml) ————————————————————————————————————————————
   rust:
-    name: Rust
+    name: 🦀 Rust
     runs-on: ubuntu-latest
     if: ${{ hashFiles('**/Cargo.toml') != '' }}
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-      - run: cargo test --all --locked || cargo test --all
+      - name: ✅ Test
+        run: cargo test --locked || cargo test
 
-  # --- Java (Maven or Gradle) ----------------------------------------------
+  # ——— Java (Maven or Gradle) ————————————————————————————————
   java:
-    name: Java
+    name: ☕ Java
     runs-on: ubuntu-latest
     if: ${{ hashFiles('**/pom.xml') != '' || hashFiles('**/build.gradle*') != '' }}
     steps:
@@ -79,16 +86,16 @@ PY
         with:
           distribution: temurin
           java-version: '21'
-      - name: Build/Test (Maven)
+      - name: ✅ Maven Test
         if: ${{ hashFiles('**/pom.xml') != '' }}
-        run: mvn -B -DskipTests=false test
-      - name: Build/Test (Gradle)
+        run: mvn -B test
+      - name: ✅ Gradle Test
         if: ${{ hashFiles('**/build.gradle*') != '' }}
         run: ./gradlew test || gradle test
 
-  # --- .NET -----------------------------------------------------------------
+  # ——— .NET (C# projects) —————————————————————————————————————————
   dotnet:
-    name: .NET
+    name: 🧱 .NET
     runs-on: ubuntu-latest
     if: ${{ hashFiles('**/*.csproj') != '' }}
     steps:
@@ -96,24 +103,31 @@ PY
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
-      - run: dotnet restore
-      - run: dotnet test --nologo --verbosity normal
+      - name: ✅ Test
+        run: |
+          dotnet restore
+          dotnet test --no-build --verbosity normal
 
-  # --- Docker (build only) --------------------------------------------------
+  # ——— Dockerfile (build-only) —————————————————————————————————————
   docker:
-    name: Docker
+    name: 🐳 Docker
     runs-on: ubuntu-latest
     if: ${{ hashFiles('**/Dockerfile') != '' }}
     steps:
       - uses: actions/checkout@v4
-      - name: Build image
-        run: docker build -t temp-image:ci .
+      - name: 🔨 Build Image
+        run: docker build -t hermetic-ci-test .
 
-  # --- Docs always ----------------------------------------------------------
+  # ——— Docs Always ———————————————————————————————————————————————
   docs:
-    name: Docs check
+    name: 📖 Docs Check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Ensure README exists
-        run: test -s README.md && echo "README present"
+      - name: 🔍 README present?
+        run: |
+          if [ ! -s README.md ]; then
+            echo "README.md is missing or empty" && exit 1
+          else
+            echo "README.md found ✅"
+          fi

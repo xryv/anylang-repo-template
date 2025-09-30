@@ -1,3 +1,45 @@
+# .gitattributes
+# Enforces consistent Git behavior across all platforms.
+# Critical for cross-OS compatibility, linguist classification, and clean diffs.
+
+# Force all text files to use LF (Unix-style) line endings in repo
 * text=auto eol=lf
+
+# Treat these as binary — avoid diff noise
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.tar binary
+*.gz binary
+*.7z binary
+*.mp4 binary
+*.mp3 binary
+
+# Normalize shell scripts
+*.sh text eol=lf
+
+# PowerShell scripts
+*.ps1 text eol=lf
+
+# GitHub Linguist overrides (for language stats)
 *.sh linguist-language=Shell
 *.ps1 linguist-language=PowerShell
+*.yml linguist-language=YAML
+*.md linguist-language=Markdown
+
+# Lock specific extensions to UTF-8 with LF
+*.js text eol=lf charset=utf-8
+*.ts text eol=lf charset=utf-8
+*.py text eol=lf charset=utf-8
+*.go text eol=lf charset=utf-8
+*.rs text eol=lf charset=utf-8
+*.java text eol=lf charset=utf-8
+*.cs text eol=lf charset=utf-8
+
+# Ignore CRLF diffs from Windows devs (optional, if team is mixed)
+*.bat text eol=crlf

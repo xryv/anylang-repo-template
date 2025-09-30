@@ -1,2 +1,29 @@
-# Replace with your GitHub handle(s)
-* @<YOUR_GITHUB>
+# CODEOWNERS
+# Automatically assigns reviewers to pull requests that modify matching files or paths.
+# GitHub will request review from these users when relevant files are changed.
+# Syntax: <pattern> @owner1 @owner2
+
+# Global ownership — all files
+* @xryv
+
+# GitHub workflows (CI, release, etc.)
+.github/workflows/ @xryv
+
+# Issue & PR templates
+.github/ISSUE_TEMPLATE/ @xryv
+.github/PULL_REQUEST_TEMPLATE.md @xryv
+
+# CI configuration
+.editorconfig @xryv
+.gitattributes @xryv
+.gitignore @xryv
+.prettierrc @xryv
+.nvmrc @xryv
+CHANGELOG.md @xryv
+CITATION.cff @xryv
+CONTRIBUTING.md @xryv
+CODE_OF_CONDUCT.md @xryv
+SECURITY.md @xryv
+LICENSE @xryv
+FUNDING.yml @xryv
+README.md @xryv
