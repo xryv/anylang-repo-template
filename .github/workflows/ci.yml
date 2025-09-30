@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 # .github/workflows/ci.yml
 # 🧪 TEST MATRIX
 # This workflow is self-aware. It detects which stack you're using and only runs what's relevant.

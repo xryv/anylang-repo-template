@@ -1,7 +1,6 @@
 # .github/workflows/codeql.yml
-# 🧠 CODEQL — AUTO-PILOT FOR THREATS
-# This workflow launches CodeQL analysis *only* if the repo contains detectable source code
-# in Node.js, Python, or Go. It runs weekly and on every push/PR to `main`.
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+# CODEQL — runs on pushes/PRs and weekly; succeeds even if no supported code is present.
 
 name: codeql
 
@@ -10,45 +9,43 @@ on:
     branches: [ main ]
   pull_request:
   schedule:
-    - cron: '0 4 * * 1' # Every Monday at 04:00 UTC
+    - cron: '0 4 * * 1'
   workflow_dispatch:
 
 jobs:
   analyze:
     name: 🧠 CodeQL
     runs-on: ubuntu-latest
-
-    if: >
-      ${{
-        hashFiles('**/package.json')     != '' ||
-        hashFiles('**/pyproject.toml')   != '' ||
-        hashFiles('**/requirements.txt') != '' ||
-        hashFiles('**/go.mod')           != ''
-      }}
-
     permissions:
       security-events: write
       actions: read
       contents: read
-
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'javascript-typescript', 'python', 'go' ]
+        language: ['javascript-typescript','python','go']
 
     steps:
       - name: 🧾 Checkout
         uses: actions/checkout@v4
 
+      # If no supported sources exist, we still run this step so the job finishes SUCCESS
+      - name: ℹ️ No supported code detected — skipping analysis
+        if: ${{ !(hashFiles('**/package.json') != '' || hashFiles('**/pyproject.toml') != '' || hashFiles('**/requirements.txt') != '' || hashFiles('**/go.mod') != '') }}
+        run: |
+          echo "No JS/TS, Python or Go sources detected in this repo. CodeQL analysis skipped."
+
       - name: 🧪 CodeQL Init
+        if: ${{ hashFiles('**/package.json') != '' || hashFiles('**/pyproject.toml') != '' || hashFiles('**/requirements.txt') != '' || hashFiles('**/go.mod') != '' }}
         uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
 
       - name: 📊 CodeQL Analyze
+        if: ${{ hashFiles('**/package.json') != '' || hashFiles('**/pyproject.toml') != '' || hashFiles('**/requirements.txt') != '' || hashFiles('**/go.mod') != '' }}
         uses: github/codeql-action/analyze@v3
 
-      - name: 🔍 Debug Language Detection
+      - name: 🔍 Debug
         run: |
-          echo "Language scanned: ${{ matrix.language }}"
-          echo "Trigger: ${{ github.event_name }}"
+          echo "Matrix language: ${{ matrix.language }}"
+          echo "Event: ${{ github.event_name }}"
