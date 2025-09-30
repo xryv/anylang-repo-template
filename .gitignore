@@ -1,0 +1,47 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+npm-debug.log*
+yarn.lock
+pnpm-lock.yaml
+dist/
+coverage/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+
+# Go
+bin/
+vendor/
+
+# Rust
+target/
+
+# Java / Gradle / Maven
+*.class
+*.jar
+*.war
+.gradle/
+build/
+target/
+
+# .NET
+bin/
+obj/
+*.user
+*.suo
+
+# Docker
+*.tar
+
+# General
+.idea/
+.vscode/
+*.log

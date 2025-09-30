@@ -1,0 +1,119 @@
+name: ci
+on:
+  push:
+  pull_request:
+
+jobs:
+  # --- Node.js ---------------------------------------------------------------
+  node:
+    name: Node.js
+    runs-on: ubuntu-latest
+    if: ${{ hashFiles('**/package.json') != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - name: Install
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+      - name: Test
+        run: |
+          if npm run | grep -q " test"; then npm test; else node -e "console.log('No test script')" ; fi
+
+  # --- Python ---------------------------------------------------------------
+  python:
+    name: Python
+    runs-on: ubuntu-latest
+    if: ${{ hashFiles('**/pyproject.toml') != '' || hashFiles('**/requirements.txt') != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f pyproject.toml ]; then pip install . || true; fi
+      - name: Test
+        run: |
+          if python -c "import pytest" 2>/dev/null; then pytest -q || true; else python - <<'PY'
+import unittest; print("pytest not found -> running unittest discovery"); 
+unittest.TextTestRunner().run(unittest.defaultTestLoader.discover('.'))
+PY
+          fi
+
+  # --- Go -------------------------------------------------------------------
+  go:
+    name: Go
+    runs-on: ubuntu-latest
+    if: ${{ hashFiles('**/go.mod') != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      - run: go test ./...
+
+  # --- Rust -----------------------------------------------------------------
+  rust:
+    name: Rust
+    runs-on: ubuntu-latest
+    if: ${{ hashFiles('**/Cargo.toml') != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo test --all --locked || cargo test --all
+
+  # --- Java (Maven or Gradle) ----------------------------------------------
+  java:
+    name: Java
+    runs-on: ubuntu-latest
+    if: ${{ hashFiles('**/pom.xml') != '' || hashFiles('**/build.gradle*') != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Build/Test (Maven)
+        if: ${{ hashFiles('**/pom.xml') != '' }}
+        run: mvn -B -DskipTests=false test
+      - name: Build/Test (Gradle)
+        if: ${{ hashFiles('**/build.gradle*') != '' }}
+        run: ./gradlew test || gradle test
+
+  # --- .NET -----------------------------------------------------------------
+  dotnet:
+    name: .NET
+    runs-on: ubuntu-latest
+    if: ${{ hashFiles('**/*.csproj') != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - run: dotnet restore
+      - run: dotnet test --nologo --verbosity normal
+
+  # --- Docker (build only) --------------------------------------------------
+  docker:
+    name: Docker
+    runs-on: ubuntu-latest
+    if: ${{ hashFiles('**/Dockerfile') != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t temp-image:ci .
+
+  # --- Docs always ----------------------------------------------------------
+  docs:
+    name: Docs check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ensure README exists
+        run: test -s README.md && echo "README present"

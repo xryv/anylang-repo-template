@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+title: anylang-repo-template
+message: "If you use this template, please cite it as below."
+type: software
+authors:
+  - family-names: "<YOUR_LASTNAME>"
+    given-names: "<YOUR_FIRSTNAME>"
+    email: "<YOUR_EMAIL>"
+license: MIT
+repository-code: "https://github.com/<YOUR_GITHUB>/anylang-repo-template"
+version: "0.1.0"
+date-released: "2025-09-30"

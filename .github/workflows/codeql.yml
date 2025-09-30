@@ -1,0 +1,25 @@
+name: codeql
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 3 * * 1' # weekly
+
+jobs:
+  analyze:
+    if: ${{ hashFiles('**/package.json') != '' || hashFiles('**/pyproject.toml') != '' || hashFiles('**/requirements.txt') != '' || hashFiles('**/go.mod') != '' }}
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'javascript-typescript', 'python', 'go' ]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+      - uses: github/codeql-action/analyze@v3
