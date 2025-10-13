@@ -37,13 +37,13 @@ jobs:
 
       - name: 🧪 CodeQL Init
         if: ${{ hashFiles('**/package.json') != '' || hashFiles('**/pyproject.toml') != '' || hashFiles('**/requirements.txt') != '' || hashFiles('**/go.mod') != '' }}
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
 
       - name: 📊 CodeQL Analyze
         if: ${{ hashFiles('**/package.json') != '' || hashFiles('**/pyproject.toml') != '' || hashFiles('**/requirements.txt') != '' || hashFiles('**/go.mod') != '' }}
-        uses: github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@v4
 
       - name: 🔍 Debug
         run: |
