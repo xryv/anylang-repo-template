@@ -27,7 +27,7 @@ jobs:
 
     steps:
       - name: 🧾 Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # If no supported sources exist, we still run this step so the job finishes SUCCESS
       - name: ℹ️ No supported code detected — skipping analysis
